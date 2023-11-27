@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Systems Design and Development | Yan Wang</title>
+    <link>https://0324wy.github.io/tag/systems-design-and-development/</link>
+      <atom:link href="https://0324wy.github.io/tag/systems-design-and-development/index.xml" rel="self" type="application/rss+xml" />
+    <description>Systems Design and Development</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 27 Jan 2023 10:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://0324wy.github.io/media/icon_hu85c61bd5867a769d7d24d0bf9f947657_254979_512x512_fill_lanczos_center_3.png</url>
+      <title>Systems Design and Development</title>
+      <link>https://0324wy.github.io/tag/systems-design-and-development/</link>
+    </image>
+    
+    <item>
+      <title>Baidu E-commerce Distributed  Order System</title>
+      <link>https://0324wy.github.io/projects/baidu_e_commerce/</link>
+      <pubDate>Fri, 27 Jan 2023 10:00:00 +0000</pubDate>
+      <guid>https://0324wy.github.io/projects/baidu_e_commerce/</guid>
+      <description>&lt;h1 id=&#34;baidu-e-commerce-middle-platform&#34;&gt;Baidu E-commerce Middle Platform&lt;/h1&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;This project is the Baidu E-commerce Middle Platform project. The role of the E-commerce Middle Platform is to provide common e-commerce capabilities for Front Platform business parties, such as ordering, after-sales, promotions, and product management.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;It is divided into four small teams, including Shop Center, Commodity Center, Marketing Center, and Trading Center. The Shop Center is mainly used to manage the stores of B-side merchants. The Commodity Center is used to manage the inventory and qualifications of products. The Trading Center is used to provide services such as ordering, shopping cart ordering, after-sales, and logistics inquiry. The Marketing Center is used to provide services such as creating coupons for merchants and calculating marketing prices.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Front Platform business parties include products from different industries such as education, e-commerce, medical beauty, and life services. For example, AiQiCha is a product for the enterprise service industry, and ZhiLiaoHaoXue is a product for the education industry. Users enter the corresponding Front Platform products by clicking related links through the Baidu search engine. When users have e-commerce-related needs, they will use the services of the Middle Platform. For example, using the education industry product ZhiLiaoHaoXue to purchase an online course.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://p.ipic.vip/xmahh5.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;design-and-architecture&#34;&gt;Design and Architecture&lt;/h2&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Taking the example of the Front Platform application DuXiaoDian calling the Trading Center, there are a total of seven modules in the entire chain, each of which is independently deployed and uses a cluster architecture. The CDN servers, reverse proxy servers, and load balancing servers sit at the top of the chain. The Trading Center connects to both distributed database servers and distributed cache servers.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://p.ipic.vip/z5bxkm.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CDN Servers&lt;/strong&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;CDN servers are designed to improve the availability and performance of a service by distributing it geographically closer to end-users. Essentially, a CDN is a cache server located closer to the users to speed up their access.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reverse Proxy Servers&lt;/strong&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Reverse proxy servers serve a similar function to CDN servers, but they are located on the side of the website&amp;rsquo;s data center. Additionally, they are responsible for ensuring security and acting as a barrier between the web server and external traffic.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Loading Balancing Servers&lt;/strong&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Load balancing servers are positioned in front of your backend servers and are responsible for distributing client requests across a group of servers. This is done in a way that maximizes speed and capacity utilization, while also ensuring that no single server becomes overloaded and negatively impacts performance. In the event that a server goes down, the load balancer redirects traffic to the remaining online servers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Distributed Cache Servers&lt;/strong&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Distributed cache servers are servers that store webpages or other internet content locally. By storing frequently accessed data in temporary storage, cache servers both speed up access to data and reduce the demand on an enterprise&amp;rsquo;s bandwidth.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;In this project, we are using Redis cluster as our distributed cache servers. Redis is known for its high-performance data read and write functions, and is widely used in caching scenarios. By using Redis, we can improve the performance of our business systems and better withstand high levels of concurrent traffic requests to the database.&lt;/p&gt;
+&lt;h2 id=&#34;core-question&#34;&gt;Core Question&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;How To Solve the Data Consistency Issues Between Redis And MySQL?&lt;/strong&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;This is also a classic problem in distributed systems - how to ensure data consistency between two heterogeneous systems.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Setting up Redis cache is to improve the performance of the system by copying hot data from MySQL to Redis. When a read request is received, it is directly read from Redis instead of from MySQL database. If the data is not available in the Redis cache, it is read from the database, and the data is then copied from the database to Redis.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://p.ipic.vip/pe646f.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;However, this can cause a problem of data inconsistency between the two systems. For example, if the data X = 1 in MySQL is modified to X = 2, the old data X = 1 will still exist in the Redis cache.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;If strong consistency is guaranteed, availability will be sacrificed. When modifying MySQL data, Redis must be updated synchronously, and no other read requests can be accepted during the update.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;To ensure availability, only eventual consistency can be guaranteed. In this project, a solution to ensure eventual consistency is adopted. When the data X = 1 in MySQL is modified to X = 2, MySQL generates a Binlog record of the data change, and when the Binlog is listened to, the change record is added to the message queue. The consumer side consumes this message by deleting the corresponding data from Redis. When a new request comes in, if the data is not in the Redis cache, it is read from the database and copied to Redis. This ensures eventual consistency between Redis and MySQL data.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://p.ipic.vip/ixrc06.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Deleting the data X = 1 from Redis instead of modifying it to X = 2 is because the cached data may not be read immediately when data changes occur, so deleting the cache improves its utilization.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

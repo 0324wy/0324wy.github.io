@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning Systems | Yan Wang</title>
+    <link>https://0324wy.github.io/tag/machine-learning-systems/</link>
+      <atom:link href="https://0324wy.github.io/tag/machine-learning-systems/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning Systems</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 22 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://0324wy.github.io/media/icon_hu85c61bd5867a769d7d24d0bf9f947657_254979_512x512_fill_lanczos_center_3.png</url>
+      <title>Machine Learning Systems</title>
+      <link>https://0324wy.github.io/tag/machine-learning-systems/</link>
+    </image>
+    
+    <item>
+      <title>Designed and Built a Deep Learning Library Called Needle</title>
+      <link>https://0324wy.github.io/projects/needle/</link>
+      <pubDate>Wed, 22 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://0324wy.github.io/projects/needle/</guid>
+      <description>&lt;p style=&#34;text-align: justify;&#34;&gt;Completed an online course on deep learning systems offered by CMU in order to delve into the internals of PyTorch and TensorFlow, and understand how they function at a fundamental level.&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Designed and built a deep learning library called Needle, capable of efficient GPU-based operations, automatic differentiation of all implemented functions, and the necessary modules to support parameterized layers, loss functions, data loaders, and optimizers.&lt;/p&gt;
+&lt;h2 id=&#34;project-0&#34;&gt;Project 0&lt;/h2&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Build a basic softmax regression algorithm, plus a simple two-layer neural network. Create these implementations both in native Python (using the numpy library), and (for softmax regression) in native C/C++.&lt;/p&gt;
+&lt;p&gt;✅ A basic &lt;code&gt;add&lt;/code&gt; function&lt;/p&gt;
+&lt;p&gt;✅ Loading MNIST data:  &lt;code&gt;parse_mnist&lt;/code&gt; function&lt;/p&gt;
+&lt;p&gt;✅Softmax loss: &lt;code&gt;softmax_loss&lt;/code&gt; function&lt;/p&gt;
+&lt;p&gt;✅Stochastic gradient descent for softmax regression&lt;/p&gt;
+&lt;p&gt;✅SGD for a two-layer neural network&lt;/p&gt;
+&lt;p&gt;✅Softmax regression in C++&lt;/p&gt;
+&lt;h2 id=&#34;project-1&#34;&gt;Project 1&lt;/h2&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Build a basic &lt;strong&gt;automatic differentiation&lt;/strong&gt; framework, then use this to re-implement the simple two-layer neural network we used for the MNIST digit classification problem in HW0.&lt;/p&gt;
+&lt;p&gt;✅Implementing forward computation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅PowerScalar&lt;/li&gt;
+&lt;li&gt;✅EWiseDiv&lt;/li&gt;
+&lt;li&gt;✅DivScalar&lt;/li&gt;
+&lt;li&gt;✅MatMul&lt;/li&gt;
+&lt;li&gt;✅Summation&lt;/li&gt;
+&lt;li&gt;✅BroadcastTo&lt;/li&gt;
+&lt;li&gt;✅Reshape&lt;/li&gt;
+&lt;li&gt;✅Negate&lt;/li&gt;
+&lt;li&gt;✅Transpose&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;✅Implementing backward computation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅EWiseDiv&lt;/li&gt;
+&lt;li&gt;✅DivScalar&lt;/li&gt;
+&lt;li&gt;✅MatMul&lt;/li&gt;
+&lt;li&gt;✅Summation&lt;/li&gt;
+&lt;li&gt;✅BroadcastTo&lt;/li&gt;
+&lt;li&gt;✅Reshape&lt;/li&gt;
+&lt;li&gt;✅Negate&lt;/li&gt;
+&lt;li&gt;✅Transpose&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;✅Topological sort: allow us to traverse through (forward or backward) the computation graph, computing gradients along the way&lt;/p&gt;
+&lt;p&gt;✅Implementing reverse mode differentiation&lt;/p&gt;
+&lt;p&gt;✅Softmax loss&lt;/p&gt;
+&lt;p&gt;✅SGD for a two-layer neural network&lt;/p&gt;
+&lt;h2 id=&#34;project-2&#34;&gt;Project 2&lt;/h2&gt;
+&lt;p&gt;Implement a &lt;strong&gt;neural network library&lt;/strong&gt; in the needle framework.&lt;/p&gt;
+&lt;p&gt;✅Implement a few different methods for weight initialization&lt;/p&gt;
+&lt;p&gt;✅Implement additional modules&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅Linear: &lt;code&gt;needle.nn.Linear&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅ReLU:&lt;code&gt;needle.nn.ReLU&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Sequential: &lt;code&gt;needle.nn.Sequential&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅LogSumExp: &lt;code&gt;needle.ops.LogSumExp&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅SoftmaxLoss: &lt;code&gt;needle.nn.SoftmaxLoss&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅LayerNorm1d: &lt;code&gt;needle.nn.LayerNorm1d&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Flatten: &lt;code&gt;needle.nn.Flatten&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅BatchNorm1d: &lt;code&gt;needle.nn.BatchNorm1d&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Dropout: &lt;code&gt;needle.nn.Dropout&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Residual: &lt;code&gt;needle.nn.Residual&lt;/code&gt; class&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;✅Implement the &lt;code&gt;step&lt;/code&gt; function of the following optimizers.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅SGD: &lt;code&gt;needle.optim.SGD&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Adam: &lt;code&gt;needle.optim.Adam&lt;/code&gt; class&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;✅Implement two data primitives: &lt;code&gt;needle.data.DataLoader&lt;/code&gt; and &lt;code&gt;needle.data.Dataset&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅Transformations: &lt;code&gt;RandomFlipHorizontal&lt;/code&gt; function and &lt;code&gt;RandomFlipHorizontal&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Dataset: &lt;code&gt;needle.data.MNISTDataset&lt;/code&gt; class&lt;/li&gt;
+&lt;li&gt;✅Dataloader: &lt;code&gt;needle.data.Dataloader&lt;/code&gt; class&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;✅Build and train an MLP ResNet&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ResidualBlock: &lt;code&gt;ResidualBlock&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;✅MLPResNet: &lt;code&gt;MLPResNet&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;✅Epoch: &lt;code&gt;epoch&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;✅Train Mnist: &lt;code&gt;train_mnist&lt;/code&gt; function&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;project-3&#34;&gt;Project 3&lt;/h2&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Build a simple backing library for the processing that underlies most deep learning systems: &lt;strong&gt;the n-dimensional array&lt;/strong&gt; (a.k.a. the NDArray).&lt;/p&gt;
+&lt;p&gt;✅Python array operations&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅reshape: &lt;code&gt;reshape&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;✅permute: &lt;code&gt;permute&lt;/code&gt; function&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

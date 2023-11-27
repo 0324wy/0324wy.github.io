@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: https://0324wy.github.io/sitemap.xml

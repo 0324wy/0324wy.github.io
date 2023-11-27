@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog | Yan Wang</title>
+    <link>https://0324wy.github.io/blog/</link>
+      <atom:link href="https://0324wy.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <description>Blog</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 08 Jun 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://0324wy.github.io/media/icon_hu85c61bd5867a769d7d24d0bf9f947657_254979_512x512_fill_lanczos_center_3.png</url>
+      <title>Blog</title>
+      <link>https://0324wy.github.io/blog/</link>
+    </image>
+    
+    <item>
+      <title>The Memory and Computation Cost of GPT</title>
+      <link>https://0324wy.github.io/blog/blog-3-gptcost/</link>
+      <pubDate>Thu, 08 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://0324wy.github.io/blog/blog-3-gptcost/</guid>
+      <description>&lt;h2 id=&#34;memory&#34;&gt;Memory&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Activation values: 50 times the parameter memory&lt;/li&gt;
+&lt;li&gt;Optimizer state: 2 times the parameter memory&lt;/li&gt;
+&lt;li&gt;Gradients: 1 times the parameter memory&lt;/li&gt;
+&lt;li&gt;KV Cache: 0.5 times the memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;number-of-parameters&#34;&gt;Number of Parameters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Number of parameters: approximately (number)：$12h^2l$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;memory-usage&#34;&gt;Memory Usage&lt;/h2&gt;
+&lt;p&gt;Independent of input data&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Memory usage during training: Excluding activation values&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Parameters: float16 + float32：$\Phi$
+&lt;ul&gt;
+&lt;li&gt;Gradients: float16 + float32：$\Phi$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Parameters for AdamW: float32：$2\Phi$&lt;/li&gt;
+&lt;li&gt;Total：$20\Phi Bytes$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Memory usage during inference: Excluding activation values&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Parameters: float16：$\Phi$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Total: $2\Phi Bytes$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;activation-values&#34;&gt;Activation Values&lt;/h2&gt;
+&lt;p&gt;Approximately: per unit (Bytes)：$(34bsh + 5bs^2a)l$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When b=1, approximately 0.8 times the parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;kv-cache&#34;&gt;KV Cache&lt;/h2&gt;
+&lt;p&gt;Approximately: per unit (number)：$2b(s + n)l$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Approximately 0.5 times the parameter memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;computation&#34;&gt;Computation&lt;/h2&gt;
+&lt;h2 id=&#34;computational-complexity&#34;&gt;Computational Complexity&lt;/h2&gt;
+&lt;p&gt;Approximately: per unit (count)：$24bsh^2l$&lt;/p&gt;
+&lt;h2 id=&#34;relationship-between-computational-complexity-and-number-of-parameters&#34;&gt;Relationship between Computational Complexity and Number of Parameters&lt;/h2&gt;
+&lt;p&gt;Approximately: 2 times the number of tokens * number of parameters&lt;/p&gt;
+&lt;p&gt;$$
+\frac{24bsh^2l} {12h^2l * bs} = 2
+$$&lt;/p&gt;
+&lt;h2 id=&#34;computation-time&#34;&gt;Computation Time&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Backward propagation is approximately twice the computation of forward propagation.&lt;/li&gt;
+&lt;li&gt;Activation value recomputation is approximately the same as forward propagation.&lt;/li&gt;
+&lt;li&gt;Total is 8 times.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$
+\frac{8 * number of tokens * number of parameters} {number of GPUs * peak flops per GPU * GPU utilization}
+$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GPU utilization is approximately between 0.3 and 0.55.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Good Open Courses for Computer Science Learning</title>
+      <link>https://0324wy.github.io/blog/blog-2-csmaterial/</link>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://0324wy.github.io/blog/blog-2-csmaterial/</guid>
+      <description>&lt;h2 id=&#34;introduction-to-computer-science&#34;&gt;Introduction to Computer Science&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;MIT 6.0001&lt;/li&gt;
+&lt;li&gt;Harvard CS50&lt;/li&gt;
+&lt;li&gt;Berkeley CS61A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-structures-and-algorithms&#34;&gt;Data Structures and Algorithms&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Stanford CS106&lt;/li&gt;
+&lt;li&gt;MIT 6.006, 6.046&lt;/li&gt;
+&lt;li&gt;Berkeley CS61A, CS61B&lt;/li&gt;
+&lt;li&gt;Princeton&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;operating-systems&#34;&gt;Operating Systems&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;CMU 15-213&lt;/li&gt;
+&lt;li&gt;Berkeley CS162, CS262&lt;/li&gt;
+&lt;li&gt;MIT 6.828&lt;/li&gt;
+&lt;li&gt;6.S081&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;computer-organization-and-architecture&#34;&gt;Computer Organization and Architecture&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;MIT 6.004&lt;/li&gt;
+&lt;li&gt;Berkeley CS61C&lt;/li&gt;
+&lt;li&gt;MHRD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;computer-networks&#34;&gt;Computer Networks&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Stanford CS144&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;databases&#34;&gt;Databases&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;CMU 15-445&lt;/li&gt;
+&lt;li&gt;MIT 6.824, 6.830&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;software-engineering&#34;&gt;Software Engineering&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;MIT 6.031&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;distributed-systems&#34;&gt;Distributed Systems&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;MIT 6.824&lt;/li&gt;
+&lt;li&gt;MIT 6.033
+&lt;ul&gt;
+&lt;li&gt;Principles of Computer System Design: An Introduction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;compiler-design&#34;&gt;Compiler Design&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Stanford CS143&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;parallel-computing&#34;&gt;Parallel Computing&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;CS 149&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;computer-graphics&#34;&gt;Computer Graphics&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Games101&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;computer-system-security&#34;&gt;Computer System Security&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;6.858&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;projects&#34;&gt;Projects&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Operating System: 6.828&lt;/li&gt;
+&lt;li&gt;Distributed Systems: 6.824&lt;/li&gt;
+&lt;li&gt;Relational Database: CMU 15-445&lt;/li&gt;
+&lt;li&gt;Parallel Computing: CS 149&lt;/li&gt;
+&lt;li&gt;Compiler Design: Stanford CS143&lt;/li&gt;
+&lt;li&gt;Computer Graphics: Games101&lt;/li&gt;
+&lt;li&gt;Computer Networks: Stanford CS144&lt;/li&gt;
+&lt;li&gt;Computer System Security: 6.858&lt;/li&gt;
+&lt;li&gt;CSAPP&lt;/li&gt;
+&lt;li&gt;Muduo: Web Server&lt;/li&gt;
+&lt;li&gt;TinSTL: STL&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Tiger Book&amp;rdquo;: Compiler&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CS DIY: &lt;a href=&#34;https://csdiy.wiki/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CS DIY Wiki&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Experience of Self-learning Driven by Interest</title>
+      <link>https://0324wy.github.io/blog/blog-1-experience/</link>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://0324wy.github.io/blog/blog-1-experience/</guid>
+      <description>&lt;p style=&#34;text-align: justify;&#34;&gt;Unlike my peers majoring in computer science, I pursued a self-learning path based on my interests. While encountering some difficulties, the journey was also highly rewarding.&lt;br&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;My first exposure to computer science was during my freshman year, where I learned C language - my first programming language. I found it fascinating and read the entire textbook thoroughly. As a result, I performed well in the course and scored 95 points. In my sophomore and junior years, I participated in mathematical modeling competitions and was introduced to neural networks. Although I didn&amp;rsquo;t fully understand them at the time, it sparked my curiosity to learn more. In my senior year, I heard about concepts like deep learning and artificial intelligence, and realized that they were built on neural networks, which I had not yet fully grasped. Driven by my curiosity, I planned to systematically learn the principles of these topics.&lt;br&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Throughout my graduate studies, starting from my senior year, I continued to explore computer science knowledge driven by my passion. I delved into Python, Machine Learning, Deep Learning, Java, C++, Data Structures and Algorithms. Along the way, I was introduced to lower-level concepts, so I started learning Operating Systems, Computer Networks, Database Principles, and Design Patterns. I also pursued many mathematics courses, including Matrix Theory, Partial Differential Equation, and Computational Methods, with the aim of becoming a well-rounded engineering student with a strong foundation in mathematics and programming skills.&lt;br&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;During my master&amp;rsquo;s degree, I chose to research on the intersection of deep learning and civil engineering. In a situation where the research group had no accumulation in this area, I had to figure things out on my own. I aspired to apply for a Ph.D. in computer science during my graduate studies, but struggled to find a clear path. I eventually decided to work instead. However, as I gained more exposure to information, I discovered that a path to a Ph.D. could be pursued through internships at research labs to gain research experience and skills.&lt;br&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;After graduation, I worked as a web backend developer at Baidu. As the entire backend system was a distributed system, I began learning about distributed systems and studied various open-source project architectures, such as Redis and Zookeeper. I also read papers on machine learning, including the Bert and GPT series.&lt;br&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;Looking back on my entire experience of self-learning, I&amp;rsquo;ve realized that I&amp;rsquo;ve gained not only knowledge, but also the ability to select appropriate learning materials, effectively manage study time and energy, and develop the courage to overcome difficulties. With these skills, I am excited to continue exploring new areas of knowledge and challenging myself further.&lt;br&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;My interest in both distributed systems and machine learning is the reason I want to work in MLSys. I believe that the infrastructure for large models is critical and promising. Additionally, this field is closer to industry and practical applications compared to other fields. The results of this field are more easily deployed in the development process and products, rather than just remaining on paper. This aligns with my research goals, which aim to have a positive impact on subsequent research in this field and its applications in industry.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

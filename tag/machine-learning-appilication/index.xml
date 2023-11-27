@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning Appilication | Yan Wang</title>
+    <link>https://0324wy.github.io/tag/machine-learning-appilication/</link>
+      <atom:link href="https://0324wy.github.io/tag/machine-learning-appilication/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning Appilication</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 02 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://0324wy.github.io/media/icon_hu85c61bd5867a769d7d24d0bf9f947657_254979_512x512_fill_lanczos_center_3.png</url>
+      <title>Machine Learning Appilication</title>
+      <link>https://0324wy.github.io/tag/machine-learning-appilication/</link>
+    </image>
+    
+    <item>
+      <title>Deep Learning Model for Wind Speed Prediction</title>
+      <link>https://0324wy.github.io/projects/windspeed/</link>
+      <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://0324wy.github.io/projects/windspeed/</guid>
+      <description>&lt;p style=&#34;text-align: justify;&#34;&gt;Short-term wind speed forecast is of great importance to wind farm regulation and its early warning. Previous studies mainly focused on the prediction at a single location but few extended the task to 2-D wind plane.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://p.ipic.vip/7xoehl.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p style=&#34;text-align: justify;&#34;&gt;In this study, a novel deep learning model was proposed for a 2-D regional wind speed forecast, using the combination of the auto-encoder of convolutional neural network (CNN) and the long short-term memory unit (LSTM). The 12-hidden-layer deep CNN was adopted to encode the high dimensional 2-D input into the embedding vector and inversely, to decode such latent representation after it was predicted by the LSTM module based on historical data.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
