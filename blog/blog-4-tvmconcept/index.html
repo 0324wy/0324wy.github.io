@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: October 29, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.e5d7adca760216d3b7e28ea434e81f6f.css" />
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Yan Wang" />
+
+
+
+
+
+  
+
+<meta name="description" content="Concept of TensorIR, RelayIR, IRModule, Prim_fun, TVM Script Two levels represent the entire neural network program; the first level is a computational graph, and the second level is the tensor program." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://0324wy.github.io/blog/blog-4-tvmconcept/" />
+<link rel="canonical" href="https://0324wy.github.io/blog/blog-4-tvmconcept/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hua5a76ffd5cf5a7c3caab46aff2309b2f_3105_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hua5a76ffd5cf5a7c3caab46aff2309b2f_3105_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@0324wy0324" />
+  <meta property="twitter:creator" content="@0324wy0324" />
+<meta property="twitter:image" content="https://0324wy.github.io/media/icon_hua5a76ffd5cf5a7c3caab46aff2309b2f_3105_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Yan Wang" />
+<meta property="og:url" content="https://0324wy.github.io/blog/blog-4-tvmconcept/" />
+<meta property="og:title" content="TensorIR, RelayIR, and IRModule in TVM | Yan Wang" />
+<meta property="og:description" content="Concept of TensorIR, RelayIR, IRModule, Prim_fun, TVM Script Two levels represent the entire neural network program; the first level is a computational graph, and the second level is the tensor program." /><meta property="og:image" content="https://0324wy.github.io/media/icon_hua5a76ffd5cf5a7c3caab46aff2309b2f_3105_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2024-10-29T00:00:00&#43;00:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2024-10-29T00:00:00&#43;00:00">
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>TensorIR, RelayIR, and IRModule in TVM | Yan Wang</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="644cd48418153d21112975c6bab99e1d" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Yan Wang</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Yan Wang</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#experience"><span>Experience</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#courses"><span>Courses</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#skills"><span>Skills</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#publications"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#awards"><span>Awards</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#hobbies"><span>Hobbies</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#blog"><span>Blog</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>TensorIR, RelayIR, and IRModule in TVM</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span class="author-highlighted">
+      Yan Wang</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Oct 29, 2024
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="concept-of-tensorir-relayir-irmodule-prim_fun-tvm-script">Concept of TensorIR, RelayIR, IRModule, Prim_fun, TVM Script</h2>
+<ul>
+<li>Two levels represent the entire neural network program; the first level is a computational graph, and the second level is the tensor program. The previous one is called RelayIR, and the second one is called TensorIR. What we use in TVM to represent the TensorIR is called TVM Script.</li>
+<li>The tensor program contains the input and output, nested loop, and computation statement, which is a more fine-grained representation of the entire neural network program.</li>
+<li>The difference between the neural network program and the tensor program is the latter is framework-independent. It can represent the neural network program from PyTorch, TensorFlow, and others in a unified format.</li>
+<li>The above demonstration is from the vertical perspective.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://pic1.zhimg.com/70/v2-dcb979b6ad713fb751c11e1fb58b779b_1440w.image?source=172ae18b&amp;biz_tag=Post" alt="TVM 自底向上（一）：基本框架和概念" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</li>
+<li>From the horizontal perspective, each graph contains multiple computation nodes(such as add, mm, ReLu, etc). Each of these nodes has its corresponding part in TensorIR; Each node corresponds to a prim_fun in TensorIR.</li>
+<li>Part of the graph contains one or more nodes, which is called a subgraph. Each subgraph corresponds to the combination of several prim_fun in TensorIR. The subgraph in RelayIR and the combination of several prim_fun in TensorIR are both called IRModule. Which is a container that includes several nodes or prim_func.</li>
+</ul>
+<h3 id="four-ways-to-get-tensorir">Four ways to get TensorIR</h3>
+<ul>
+<li>Write TVM Script</li>
+<li>TE Expression</li>
+<li>Transformation</li>
+<li>Load from PyTorch</li>
+</ul>
+<h3 id="schedule-compute-decomposition">Schedule Compute Decomposition</h3>
+<ul>
+<li>Transformation</li>
+</ul>
+<h2 id="source-code">Source Code</h2>
+<h3 id="object">Object</h3>
+<ol>
+<li>All the IR datatypes should be inherent in the base class called Object, which defines the attributes of this class, and a function called VisitAttrs.</li>
+<li>In this way, the IR datatypes are in a unified format.</li>
+<li>Serialize/format/reflection/python bind/hash, to put it simply, interact with these IRs.</li>
+<li>The visitor pattern is a design pattern that makes the data and operations of that data separate. The benefits are from two aspects: 1. When we add new operations or change the original operations, we don&rsquo;t have to change the code of data. 2. VisitAttrs allows us can process all the fields in a unified way.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TensorNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="n">public</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="o">/*</span><span class="err">!</span> \<span class="n">brief</span> <span class="n">The</span> <span class="n">shape</span> <span class="n">of</span> <span class="n">the</span> <span class="n">tensor</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Array</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">shape</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">/*</span><span class="err">!</span> \<span class="n">brief</span> <span class="n">data</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">content</span> <span class="n">of</span> <span class="n">the</span> <span class="n">tensor</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Type</span> <span class="n">dtype</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">/*</span><span class="err">!</span> \<span class="n">brief</span> <span class="n">the</span> <span class="n">source</span> <span class="n">operation</span><span class="p">,</span> <span class="n">can</span> <span class="n">be</span> <span class="kc">None</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Operation</span> <span class="n">op</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">/*</span><span class="err">!</span> \<span class="n">brief</span> <span class="n">the</span> <span class="n">output</span> <span class="n">index</span> <span class="kn">from</span> <span class="nn">source</span> <span class="n">operation</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">value_index</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="o">/*</span><span class="err">!</span> \<span class="n">brief</span> <span class="n">constructor</span> <span class="o">*/</span>
+</span></span><span class="line"><span class="cl">  <span class="n">TensorNode</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">void</span> <span class="n">VisitAttrs</span><span class="p">(</span><span class="n">AttrVisitor</span><span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="n">final</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v</span><span class="o">-&gt;</span><span class="n">Visit</span><span class="p">(</span><span class="s2">&#34;shape&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v</span><span class="o">-&gt;</span><span class="n">Visit</span><span class="p">(</span><span class="s2">&#34;dtype&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dtype</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v</span><span class="o">-&gt;</span><span class="n">Visit</span><span class="p">(</span><span class="s2">&#34;op&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">op</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v</span><span class="o">-&gt;</span><span class="n">Visit</span><span class="p">(</span><span class="s2">&#34;value_index&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">value_index</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h3 id="runtime">Runtime</h3>
+<ul>
+<li>What is runtime? After we compile the code or the model code, we still need some other support to run the code, such as memory management, handling errors, etc. So, we develop a program to do that, and that program is called runtime.</li>
+<li>In the following example, you need to: 1. load the compiled model code; 2. initialize new data; 3. search the needed function; 4. run the function and print the result.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tvm</span>
+</span></span><span class="line"><span class="cl"><span class="n">mod</span> <span class="o">=</span> <span class="n">tvm</span><span class="o">.</span><span class="n">runtime</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="s2">&#34;compiled_artifact.so&#34;</span><span class="p">)</span> <span class="c1"># tvm.runtime.Module</span>
+</span></span><span class="line"><span class="cl"><span class="n">arr</span> <span class="o">=</span> <span class="n">tvm</span><span class="o">.</span><span class="n">nd</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">tvm</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="c1"># tvm.runtime.NDArray</span>
+</span></span><span class="line"><span class="cl"><span class="n">fun</span> <span class="o">=</span> <span class="n">mod</span><span class="p">[</span><span class="s2">&#34;addone&#34;</span><span class="p">]</span> <span class="c1"># tvm.runtime.PackedFunc</span>
+</span></span><span class="line"><span class="cl"><span class="n">fun</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</span></span></code></pre></div><h3 id="shared_ptr">shared_ptr</h3>
+<ul>
+<li>include/tvm/runtime/object.h defines Object and ObjectRef as two types.</li>
+<li>The ObjectRef can be seen as the share_ptr&lt;Object)</li>
+<li>The shared_ptr has three features
+<ul>
+<li>Automatic management of memory, specifically, automatically deletes the Object if it is released.</li>
+<li>One Object could have multiple shared_ptr</li>
+<li>Reference counter: if the count of references is 0, the object will be deleted.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#include &lt;iostream&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#include &lt;memory&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="p">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span> <span class="o">//</span> <span class="n">Creates</span> <span class="n">a</span> <span class="n">shared_ptr</span> <span class="n">to</span> <span class="n">an</span> <span class="nb">int</span> <span class="k">with</span> <span class="n">value</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="p">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span> <span class="o">//</span> <span class="n">Now</span> <span class="n">p1</span> <span class="ow">and</span> <span class="n">p2</span> <span class="n">share</span> <span class="n">ownership</span> <span class="n">of</span> <span class="n">the</span> <span class="n">same</span> <span class="nb">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">p1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span> <span class="o">//</span> <span class="n">Outputs</span><span class="p">:</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&#34;Use count: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="o">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span> <span class="o">//</span> <span class="n">Outputs</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="k">as</span> <span class="n">p1</span> <span class="ow">and</span> <span class="n">p2</span> <span class="n">share</span> <span class="n">ownership</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">p2</span><span class="o">.</span><span class="n">reset</span><span class="p">();</span> <span class="o">//</span> <span class="n">p2</span> <span class="n">releases</span> <span class="n">ownership</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">int</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&#34;Use count after reset: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="o">.</span><span class="n">use_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span> <span class="o">//</span> <span class="n">Outputs</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="k">as</span> <span class="n">only</span> <span class="n">p1</span> <span class="n">owns</span> <span class="n">the</span> <span class="nb">int</span> <span class="n">now</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="packedfunc">PackedFunc</h3>
+<p>==TODO==</p>
+<ul>
+<li>TVM has a Foreign Function Interface mechanism, which allows any language to call a function written by any language.</li>
+<li>What should we do for the function? First of all, we need to erase the parameter type and return type of the function.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;tvm/runtime/packed_func.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">MyAdd</span><span class="p">(</span><span class="n">TVMArgs</span> <span class="n">args</span><span class="p">,</span> <span class="n">TVMRetValue</span><span class="o">*</span> <span class="n">rv</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>  <span class="c1">// Access arguments with type conversion
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="o">*</span><span class="n">rv</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>  <span class="c1">// Set the return value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">CallPacked</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">PackedFunc</span> <span class="n">myadd</span> <span class="o">=</span> <span class="n">PackedFunc</span><span class="p">(</span><span class="n">MyAdd</span><span class="p">);</span>  <span class="c1">// Wrap MyAdd as a PackedFunc
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">myadd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Call PackedFunc, returns 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h3 id="module">Module</h3>
+<ul>
+<li>The result of the compilation is Runtime.Module, which is a hashmap&lt;functionname, PackedFunc&gt;.</li>
+<li>When this hashmap is retrieved, the caller gets the function and sets up the function and then runs the function.</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2F0324wy.github.io%2Fblog%2Fblog-4-tvmconcept%2F&amp;text=TensorIR%2C&#43;RelayIR%2C&#43;and&#43;IRModule&#43;in&#43;TVM" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2F0324wy.github.io%2Fblog%2Fblog-4-tvmconcept%2F&amp;t=TensorIR%2C&#43;RelayIR%2C&#43;and&#43;IRModule&#43;in&#43;TVM" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=TensorIR%2C%20RelayIR%2C%20and%20IRModule%20in%20TVM&amp;body=https%3A%2F%2F0324wy.github.io%2Fblog%2Fblog-4-tvmconcept%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2F0324wy.github.io%2Fblog%2Fblog-4-tvmconcept%2F&amp;title=TensorIR%2C&#43;RelayIR%2C&#43;and&#43;IRModule&#43;in&#43;TVM" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=TensorIR%2C&#43;RelayIR%2C&#43;and&#43;IRModule&#43;in&#43;TVM%20https%3A%2F%2F0324wy.github.io%2Fblog%2Fblog-4-tvmconcept%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2F0324wy.github.io%2Fblog%2Fblog-4-tvmconcept%2F&amp;title=TensorIR%2C&#43;RelayIR%2C&#43;and&#43;IRModule&#43;in&#43;TVM" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://0324wy.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu5c070e743337f420a875eca14ea8f34a_2936688_270x270_fill_q75_lanczos_center.jpg" alt="Yan Wang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://0324wy.github.io/">Yan Wang</a></h5>
+      <h6 class="card-subtitle">Picture was AI-generated</h6>
+      <p class="card-text">My research interests lie in efficient machine learning systems, security and privacy of large models.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:0324wy@gmail.com" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=fNhcK-cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/0324wy" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/0324wy0324" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/yan-wang-82926917a/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://drive.google.com/file/d/12D7ivJEJJQ_S5emui53YqCl1KHAkdhD8/view?usp=sharing" target="_blank" rel="noopener">
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.b4708d4364577c16ab7001b265a063a4.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.6ab16275cbca742a586c1726e3d94093.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
